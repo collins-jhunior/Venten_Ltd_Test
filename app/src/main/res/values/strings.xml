@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Chimezie Ugonna</string>
+    <string name="empty">empty</string>
+    <string name="filters">Filters</string>
+    <string name="date_range">Date Range:</string>
+    <string name="gender">Gender:</string>
+    <string name="countries">Countries:</string>
+    <string name="colors">Colors:</string>
+    <string name="color">Color:</string>
+    <string name="car_owners">Car Owners</string>
+    <string name="full_name">Full Name:</string>
+    <string name="email">Email:</string>
+    <string name="model">Model:</string>
+    <string name="year">Year:</string>
+    <string name="job_title">Job Title:</string>
+    <string name="biography">Biography</string>
+    <string name="search">Search...</string>
+    <string name="sorry_nothing_was_found">Sorry nothing was found.</string>
+</resources>
