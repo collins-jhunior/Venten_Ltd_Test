@@ -66,7 +66,7 @@ public class car_records_adapter extends RecyclerView.Adapter<car_records_adapte
         return data.size();
     }
 
-    public void filter(ArrayList<CarData> filteredlist) {
+    void filter(ArrayList<CarData> filteredlist) {
         data = filteredlist;
         notifyDataSetChanged();
     }
