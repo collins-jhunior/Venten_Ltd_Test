@@ -1,7 +1,9 @@
 package ventenltd.com;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -16,8 +18,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -108,7 +112,40 @@ public class car_records extends AppCompatActivity {
 
             }
         });
-        download_file();
+        check_permission();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    public void check_permission() {
+        if (ActivityCompat.checkSelfPermission(car_records.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(car_records.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                ActivityCompat.requestPermissions(car_records.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+            } else {
+                ActivityCompat.requestPermissions(car_records.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+
+        } else {
+            download_file();
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                download_file();
+            } else {
+                list.setVisibility(View.INVISIBLE);
+                load.setVisibility(View.INVISIBLE);
+                error.setVisibility(View.VISIBLE);
+                String text_ = "Please enable storage permission for this device first, then tap this text to refresh.";
+                error_text.setText(text_);
+            }
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -418,7 +455,7 @@ public class car_records extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void refresh(View v) {
-        download_file();
+        check_permission();
     }
 
     public boolean isNetworkAvailable(Context context) {
