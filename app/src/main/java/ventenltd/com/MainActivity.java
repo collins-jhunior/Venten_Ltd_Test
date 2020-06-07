@@ -140,7 +140,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refresh(View v) {
-        load_data();
+        if (isNetworkAvailable(this)) {
+            load_data();
+        } else {
+            list.setVisibility(View.INVISIBLE);
+            load.setVisibility(View.INVISIBLE);
+            error.setVisibility(View.VISIBLE);
+            String text = "Oops something went wrong. Please check your Network connection and tap this text to refresh.";
+            error_text.setText(text);
+        }
     }
 
     public boolean isNetworkAvailable(Context context) {
