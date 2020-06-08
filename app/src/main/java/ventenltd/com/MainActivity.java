@@ -18,6 +18,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -65,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         countries = new ArrayList<>();
         colors = new ArrayList<>();
         list.setAdapter(new filter_adapter(dates, genders, countries, colors, MainActivity.this));
+
+        updateAndroidSecurityProvider();
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = "https://ven10.co/assessment/filter.json";
@@ -154,5 +159,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean isNetworkAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE) != null) && connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED || (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI) != null) && connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+    }
+
+    private void updateAndroidSecurityProvider() {
+        try {
+            ProviderInstaller.installIfNeeded(this);
+        } catch (GooglePlayServicesRepairableException e) {
+            // Thrown when Google Play Services is not installed, up-to-date, or enabled
+            // Show dialog to allow users to install, update, or otherwise enable Google Play services.
+            System.out.print(e.getMessage());
+        } catch (GooglePlayServicesNotAvailableException e) {
+            System.out.print(e.getMessage());
+        }
     }
 }
