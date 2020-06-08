@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                     list.setVisibility(View.INVISIBLE);
                     load.setVisibility(View.INVISIBLE);
                     error.setVisibility(View.VISIBLE);
-                    String text = "An error occurred somewhere, data could not be loaded. Please tap this text to refresh.";
+                    String text = "An error occurred somewhere, data could not be loaded (Json error: " + e.getMessage() + "). Please tap this text to refresh.";
                     error_text.setText(text);
                 }
             }
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 list.setVisibility(View.INVISIBLE);
                 load.setVisibility(View.INVISIBLE);
                 error.setVisibility(View.VISIBLE);
-                String text = "An error occurred somewhere, data could not be loaded. Please tap this text to refresh.";
+                String text = "An error occurred somewhere, data could not be loaded (Volley error: " + e.getMessage() + "). Please tap this text to refresh.";
                 error_text.setText(text);
             }
         }) {
